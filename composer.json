@@ -1,0 +1,37 @@
+{
+  "name": "dompat/stemmer",
+  "description": "A strictly-typed stemming library for PHP 8.3+. Supports Czech and English with Light and Aggressive modes.",
+  "keywords": ["stemmer", "stemming", "nlp", "czech", "english", "search", "indexing"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dominik Patera",
+      "email": "patera@softbot.cz"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.0",
+    "phpstan/phpstan": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dompat\\Stemmer\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dompat\\Stemmer\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  }
+}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dompat\Stemmer;
 
 use Dompat\Stemmer\Contract\DriverInterface;
+use Dompat\Stemmer\Contract\StemmerModeInterface;
 use Dompat\Stemmer\Enum\StemmerMode;
 use Dompat\Stemmer\Exception\DriverNotFoundException;
 
@@ -36,12 +37,12 @@ final class Stemmer
      *
      * @param string $word The word to be stemmed.
      * @param string $locale The locale (e.g., 'en', 'en_US', 'cs').
-     * @param StemmerMode $mode The stemming mode (LIGHT for highlighting, AGGRESSIVE for search).
+     * @param StemmerModeInterface $mode The stemming mode (LIGHT for highlighting, AGGRESSIVE for search).
      *
      * @return string The stemmed root of the word.
      * @throws DriverNotFoundException If no driver is registered for the given locale.
      */
-    public function stem(string $word, string $locale, StemmerMode $mode = StemmerMode::LIGHT): string
+    public function stem(string $word, string $locale, StemmerModeInterface $mode = StemmerMode::LIGHT): string
     {
         return $this->getDriver($locale)->stem($word, $mode);
     }

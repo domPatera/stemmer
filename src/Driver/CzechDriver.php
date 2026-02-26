@@ -273,7 +273,13 @@ readonly class CzechDriver implements DriverInterface
      */
     private function endsWithAny(string $word, array $suffixes): bool
     {
-        return array_any($suffixes, fn($suffix) => str_ends_with($word, $suffix));
+        foreach ($suffixes as $suffix) {
+            if (str_ends_with($word, $suffix)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     #[\Override]

@@ -1,0 +1,43 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} | Symfony ${{ matrix.symfony }} | ${{ matrix.dependency_version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ 8.3, 8.5 ]
+        dependency_version: [ lowest, highest ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, ctype, iconv, json
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          if [ "${{ matrix.dependency_version }}" = "lowest" ]; then
+             composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable
+          else
+             composer update --prefer-dist --no-interaction
+          fi
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit
